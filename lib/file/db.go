@@ -25,7 +25,7 @@ var (
 //init csv from file
 func GetDb() *DbUtils {
 	once.Do(func() {
-		jsonDb := NewJsonDb(common.GetRunPath())
+		jsonDb := NewJsonDb(common.GetCwd())
 		jsonDb.LoadClientFromJsonFile()
 		jsonDb.LoadTaskFromJsonFile()
 		jsonDb.LoadHostFromJsonFile()

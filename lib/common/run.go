@@ -17,6 +17,14 @@ func GetRunPath() string {
 	return path
 }
 
+func GetCwd() string {
+	cwd, err := os.Getwd()
+	if err != nil {
+		panic(err)
+	}
+	return cwd
+}
+
 //Different systems get different installation paths
 func GetInstallPath() string {
 	var path string
@@ -47,8 +55,9 @@ func IsWindows() bool {
 //interface log file path
 func GetLogPath() string {
 	var path string
+	wd, _ := os.Getwd()
 	if IsWindows() {
-		path = filepath.Join(GetAppPath(), "nps.log")
+		path = filepath.Join(wd, "nps.log")
 	} else {
 		path = "/var/log/nps.log"
 	}

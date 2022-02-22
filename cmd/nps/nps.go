@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"log"
 	"os"
 	"os/exec"
@@ -33,13 +34,15 @@ var (
 )
 
 func main() {
+	wd, _ := os.Getwd()
+	fmt.Println(wd)
 	flag.Parse()
 	// init log
 	if *ver {
 		common.PrintVersion()
 		return
 	}
-	if err := beego.LoadAppConfig("ini", filepath.Join(common.GetRunPath(), "conf", "nps.conf")); err != nil {
+	if err := beego.LoadAppConfig("ini", filepath.Join("conf", "nps.conf")); err != nil {
 		log.Fatalln("load config file error", err.Error())
 	}
 	common.InitPProfFromFile()
@@ -151,7 +154,10 @@ func main() {
 			return
 		}
 	}
-	_ = s.Run()
+	err = s.Run()
+	if err != nil {
+		panic(err)
+	}
 }
 
 type nps struct {
